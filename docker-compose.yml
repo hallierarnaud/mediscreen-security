@@ -24,6 +24,7 @@ services:
       - MYSQL_DATABASE=mysql
   mediscreenpatient:
     build: ../Mediscreen-patient
+    hostname: patient
     image: mediscreen-patient
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldbpatient:3306/mediscreen
