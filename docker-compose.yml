@@ -1,0 +1,51 @@
+version: "3"
+services:
+  mysqldbsecurity:
+    image: mysql:8
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mysqlsecurity
+  monapp:
+    build: .
+    image: mediscreen-security
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldbsecurity:3306/userservice
+    depends_on:
+      - mysqldbsecurity
+      - mediscreenpatient
+      - mediscreennote
+      - mediscreenrisk
+    ports:
+      - "8084:8084"
+  mysqldbpatient:
+    image: mysql:8
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mysql
+  mediscreenpatient:
+    build: ../Mediscreen-patient
+    image: mediscreen-patient
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldbpatient:3306/mediscreen
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysqldbpatient
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+  mediscreennote:
+    build: ../Mediscreen-note
+    image: mediscreen-note
+    ports:
+      - "8082:8082"
+    environment:
+      - spring.data.mongodb.host=mongodb
+    depends_on:
+      - mongodb
+  mediscreenrisk:
+    build: ../Mediscreen-risk
+    image: mediscreen-risk
+    ports:
+      - "8083:8083"
