@@ -4,7 +4,7 @@ services:
     image: mysql:8
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=mysqlsecurity
+      - MYSQL_DATABASE=userservice
   monapp:
     build: .
     image: mediscreen-security
@@ -21,7 +21,7 @@ services:
     image: mysql:8
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=mysql
+      - MYSQL_DATABASE=mediscreen
   mediscreenpatient:
     build: ../Mediscreen-patient
     hostname: patient
