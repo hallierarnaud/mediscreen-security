@@ -12,8 +12,8 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldbsecurity:3306/userservice
     depends_on:
       - mysqldbsecurity
-      - mediscreenpatient
-      - mediscreennote
+      - mediscreen-patient
+      - mediscreen-note
       - mediscreenrisk
     ports:
       - "8084:8084"
@@ -22,7 +22,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=mediscreen
-  mediscreenpatient:
+  mediscreen-patient:
     build: ../Mediscreen-patient
     hostname: patient
     image: mediscreen-patient
@@ -36,7 +36,7 @@ services:
     image: mongo
     ports:
       - "27018:27017"
-  mediscreennote:
+  mediscreen-note:
     build: ../Mediscreen-note
     image: mediscreen-note
     ports:
@@ -48,5 +48,8 @@ services:
   mediscreenrisk:
     build: ../Mediscreen-risk
     image: mediscreen-risk
+    depends_on:
+      - mediscreen-patient
+      - mediscreen-note
     ports:
       - "8083:8083"
